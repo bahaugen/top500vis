@@ -1,8 +1,14 @@
 top500vis
 =========
 
-Javascript visualization of the top 500 supercomputers
-This is a final project for COSC 557 and the University of Tennessee.
 Developers: Nick McNutt & Blake Haugen
+
+We plan to create a webpage using javascript to tell a visual story about
+the Top 500 supercomputer list that has been compiled every June and November
+since 1993.
+
+This is a final project for a Visualization course (COSC 557) at the 
+University of Tennessee Knoxville.
+
 
 
