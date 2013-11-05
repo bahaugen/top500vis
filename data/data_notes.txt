@@ -1,0 +1,21 @@
+Some notes about the filtered data
+
+- Rmax column has been renamed to RMax across the data set for consistency 
+- Rpeak column has been renamed to RPeak across the data set for consistency 
+
+- Accelerator cores (11/11) renamed to Accelerator/Co-Processor Cores for
+  consistency
+
+- Accelerator (6/11-11/11) renamed to Acellerator/Co-Processor for consistency
+
+- Effeciency (%) (11/11-6/12) renamed to Efficiency (%) for consistency
+
+- Processors was used from 6/93-6/08
+    Cores was used from 11/08-6/11 (adapted for multicore era)
+    Total Cores has been used from 11/11 to present (adapted to accelerator era)
+    All of these were renamed to Total Cores in the final data set
+
+After the data cleaning is complete, all of the files are combined to create the
+clean data file.  Obviously there are some columns missing in parts of the file
+as well as some "None", "NaN" and "0" entries.  The final file is pretty large
+right now but this can be reduced for optimization in the future.
