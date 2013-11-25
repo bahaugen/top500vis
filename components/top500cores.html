@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Top 500 Visualization Performance Line Plot</title>
+        <script type="text/javascript" src="../d3/d3.v3.min.js"></script>
+        <style type="text/css">
+            body {
+                font: 10px sans-serif;
+            }
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: black;
+                shape-rendering: crispEdges;
+            }
+            .axis text {
+                font-family: sans-serif;
+                font-size: 11px;
+            }
+            .line {
+                fill: none;
+                stroke=width : 2.0 px;
+            }
+            .overlay {
+                fill: none;
+                pointer-events: all;
+            }
+            .focus circle {
+                fill: none;
+                stroke: black;
+            }
+            .focus line {
+                fill: none;
+                stroke: black;
+                stroke-width: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Top 500 Visualization Cores Line Plot</h1>
+        <script type="text/javascript">
+            
+            //Width and height
+            var margin = {top: 20, right: 115, bottom: 20, left: 100},
+                w=960-margin.left-margin.right,
+                h=500-margin.top-margin.bottom;
+
+            var dateParser = d3.time.format("%Y%m").parse;
+            var dateOutput = d3.time.format("%b %Y");
+            var bisectDate = d3.bisector(function(d){ return d.date; }).left;
+            var xScale = d3.time.scale()
+                .range([0,w]);
+            var yScale = d3.scale.log()
+                .range([h,0]);
+
+            var color = d3.scale.category10();
+
+            var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left");
+            
+            var line = d3.svg.line()
+                .x(function(d) { return xScale(d.date); })
+                .y(function(d) { return yScale(d.cores);} );
+                //.interpolate("basis")
+                
+    
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width",w+margin.left+margin.right)
+                .attr("height",h+margin.top+margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top
+                + ")");
+
+            d3.csv("../data/core_data.csv",function(error,data) {
+                console.log(data);
+                color.domain(d3.keys(data[0]).filter(function(key) {return key
+                !== "date" && key!== ""; }));
+                data.forEach(function(d) {
+                    d.date=dateParser(d.date);
+                });
+
+                var metrics = color.domain().map(function(name) {
+                    return {
+                        name: name,
+                        values: data.map(function(d) {
+                            return { date: d.date, cores: +d[name]};
+                        })
+                    };
+                });
+                xScale.domain(d3.extent(data, function(d) { return d.date; }));
+                yScale.domain([ 0.1,
+                    //d3.min(cities,function(c) { return d3.min(c.values,
+                    //function(v) {return v.temperature; }); })-15,
+                    d3.max(metrics,function(c) { return d3.max(c.values,
+                    function(v) {return v.cores; }); })
+                ]); 
+                
+                svg.append("g")
+                    .attr("class","x axis")
+                    .attr("transform", "translate(0," + h + ")")
+                    .call(xAxis);
+
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("x", -125)
+                    .attr("dy", ".71em")
+                    .style("text-anchor","end")
+                    .text("Cores");
+
+
+
+                var metric = svg.selectAll(".metric")
+                    .data(metrics)
+                    .enter()
+                    .append("g")
+                    .attr("class","metric");
+
+                metric.append("path")
+                    .attr("class","line")
+                    .attr("d", function(d) { return line(d.values); })
+                    .style("stroke", function(d) { return color(d.name); });
+
+                var legend = svg.selectAll(".legend")
+                    .data(color.domain())
+                    .enter()
+                    .append("g")
+                    .attr("class","legend")
+                    .attr("transform",function(d,i) { return "translate(0,"
+                    +((i*20)+350) +")"; });
+
+                legend.append("rect")
+                    .attr("x",w-18)
+                    .attr("width",18)
+                    .attr("height",18)
+                    .style("fill",color);
+
+                legend.append("text")
+                    .attr("x",w-24)
+                    .attr("y",9)
+                    .attr("dy", ".35em")
+                    .style("text-anchor","end")
+                    .text(function(d) {return d;});
+
+                var focusA = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusA.append("circle")
+                    .attr("r",4.5);
+                focusA.append("text")
+                    .attr("x",9)
+                    .attr("dy", ".35em");
+                
+                var focusS = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusS.append("circle")
+                    .attr("r",4.5);
+                focusS.append("text")
+                    .attr("x",9)
+                    .attr("y",5)
+                    .attr("dy", ".35em");
+                
+                var focusN = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusN.append("circle")
+                    .attr("r",4.5);
+                focusN.append("text")
+                    .attr("x",9)
+                    .attr("y",5)
+                    .attr("dy", ".35em");
+                    
+                var focusB = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusB.append("circle")
+                    .attr("r",4.5);
+                focusB.append("text")
+                    .attr("x",9)
+                    .attr("y",-5)
+                    .attr("dy", ".35em");
+
+                var focusL = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusL.append("line")
+                    .attr("x1",0)
+                    .attr("y1",0)
+                    .attr("x2",0)
+                    .attr("y2",h+margin.bottom);
+                focusL.append("text")
+                    .attr("x",9)
+                    .attr("y",h-8)
+                    .attr("dy", ".35em");
+
+                svg.append("rect")
+                    .attr("class", "overlay")
+                    .attr("width",w)
+                    .attr("height",h)
+                    .on("mouseover",function() { 
+                        focusA.style("display", null);
+                        focusB.style("display", null);
+                        focusN.style("display", null);
+                        focusS.style("display", null);
+                        focusL.style("display", null);
+                    })
+                    .on("mouseout",function() {
+                        focusA.style("display", "none");
+                        focusB.style("display", "none");
+                        focusS.style("display", "none");
+                        focusN.style("display", "none");
+                        focusL.style("display", "none");
+                    })
+                    .on("mousemove", mousemove);
+
+                function mousemove() {
+                    var x0 =  xScale.invert(d3.mouse(this)[0]),
+                        i = bisectDate(data,x0,1),
+                        d0 = data[i-1],
+                        d1 = data[i],
+                        d = x0-d0.date > d1.date-x0 ? d1 : d0;
+                        console.log(d);
+                    focusA.attr("transform","translate(" +xScale(d.date)+","+
+                    yScale(d.min)+")");
+                    focusA.select("text").text(d.min+"Cores");
+                    
+                    focusB.attr("transform","translate(" +xScale(d.date)+","+
+                    yScale(d.max)+")");
+                    focusB.select("text").text(d.max+"Cores");
+                    
+                    focusN.attr("transform","translate(" +xScale(d.date)+","+
+                    yScale(d.mean)+")");
+                    focusN.select("text").text(d.mean+"Cores");
+                    
+                    focusS.attr("transform","translate(" +xScale(d.date)+","+
+                    yScale(d['#1'])+")");
+                    focusS.select("text").text(d['#1']+"Cores");
+                    
+                    focusL.attr("transform","translate(" +xScale(d.date)+","+
+                    0+")");
+                    focusL.select("text").text(dateOutput(d.date));
+                }
+
+
+            });
+        </script>
+    </body>
+</html>
