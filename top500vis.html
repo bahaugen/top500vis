@@ -1,0 +1,63 @@
+<html>
+<head>
+	<style type="text/css">
+	iframe {
+    	width: 1000px;
+    	height: 600px;
+	}
+	</style>
+</head>
+<body>
+	<script>
+		function newSite(selectorName,frameName,titleName,captionName) {
+    		var e = document.getElementById(selectorName);
+    		var strUser = e.options[e.selectedIndex].value;
+    		var sites = ['http://www.bhaugen.com/vis/components/top500line.html',
+                 		'http://www.bhaugen.com/vis/components/top500cores.html']
+    		var sites2 = [
+    						['http://www.bhaugen.com/vis/components/top500line.html','Performance','Performance Caption'],
+                 			['http://www.bhaugen.com/vis/components/top500cores.html','Core','Core Caption']
+                 		]
+    
+    		document.getElementById(frameName).src = sites2[strUser][0];
+    		document.getElementById(titleName).innerHTML=sites2[strUser][1]
+    		document.getElementById(captionName).innerHTML=sites2[strUser][2]
+		}
+	</script>
+	<h1>Visualizing Trends in Supercomputing</h1>
+	<h3>Blake Haugen and Nick McNutt</h3>
+	<table>
+		<tr>
+			<td>
+				<select id="selector1" onchange="newSite('selector1','myIframe1','title1','caption1');">
+  					<option value="0"  selected>Performance</option>
+  					<option value="1">Cores</option>
+				</select>
+			</td>
+			<td>
+				<iframe id="myIframe1" src="http://www.bhaugen.com/vis/components/top500line.html" scrolling="no" frameBorder="0"></iframe>
+			</td>
+			<td>
+				<h3 id="title1">Performance</h3>
+				<p id="caption1">Performance Caption</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<select id="selector2" onchange="newSite('selector2','myIframe2','title2','caption2');">
+  					<option value="0">Performance</option>
+  					<option value="1" selected>Cores</option>
+				</select>
+			</td>
+			<td>
+				<iframe id="myIframe2" src="http://www.bhaugen.com/vis/components/top500cores.html" scrolling="no" frameBorder="0"></iframe>
+			</td>
+			<td>
+				<h3 id="title2">Cores</h3>
+				<p id="caption2">Core Caption</p>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>
