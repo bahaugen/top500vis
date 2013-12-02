@@ -119,6 +119,9 @@ def main():
         segment_list.append(segment_data[key])
     segment_df=pd.DataFrame(segment_list)
     segment_df=segment_df.sort(columns="date")
+    segment_df=segment_df.fillna(0)
+    segment_df[['Government']] = segment_df[['Government']].astype(int)
+    segment_df[['Others']] = segment_df[['Others']].astype(int)
     print segment_df
     segment_df.to_csv("segment_data.csv")
 
