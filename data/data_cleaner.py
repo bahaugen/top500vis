@@ -41,7 +41,7 @@ def main():
     #print df[90:100]
     for key in variables:
         print len(variables[key]),key
-        if len(variables[key])<41:
+        if len(variables[key])<42:
             print variables[key]
     
     print master_data
