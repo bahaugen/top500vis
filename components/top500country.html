@@ -32,9 +32,54 @@ body {
 <script src="http://d3js.org/d3.v3.js"></script>
 <script>
 
+	var alpha = 1.5;
+  	var spacing = 12;
+  	function relax(lab_list) {
+  		var again=true;
+  		while (again){
+    		again = false;
+    		//while (again==true)
+    		lab_list.forEach(function(a,i) {
+      			lab_list.slice(i+1).forEach(function(b) {
+      				//console.log(a,b);
+      				var atrans = a.getAttribute('transform');
+					var aparts  = /translate\(\s*([^\s,)]+)[ ,]([^\s,)]+)/.exec(atrans);
+					var btrans = b.getAttribute('transform');
+					var bparts  = /translate\(\s*([^\s,)]+)[ ,]([^\s,)]+)/.exec(btrans);
+        			aparts[1]=+aparts[1];
+        			aparts[2]=+aparts[2];
+        			bparts[1]=+bparts[1];
+        			bparts[2]=+bparts[2];
+        			var dy = aparts[2] - bparts[2];
+        			dy = dy || 0
+        			//console.log(aparts[1],aparts[2],bparts[1],bparts[2],dy);
+        			if (Math.abs(dy) < spacing) {
+          				again = true;
+          				var sign = dy > 0 ? 1 : -1;
+          				//console.log(aparts[1],aparts[2],aparts[2]+sign*alpha,bparts[1],bparts[2],bparts[2]-sign*alpha,dy);
+          				var movea= aparts[2] + sign*alpha
+          				if (movea<0){
+          					movea=0;
+          				}
+          				var moveb= bparts[2] - sign*alpha
+          				if (moveb<0){
+          					moveb=0;
+          				}
+          				//console.log(movea,moveb);
+          				d3.select(a).attr("transform",function(d) { return "translate("+aparts[1]+","+movea+")";});
+          				d3.select(b).attr("transform",function(d) { return "translate("+bparts[1]+","+moveb+")";});
+          				a.y += sign*alpha;
+          				b.y -= sign*alpha;
+        			}
+      			});
+    		});
+    		//again=false;
+    	};
+  };
+
 d3.selection.prototype.moveToFront = function() {
   return this.each(function(){
-  	console.log(this);
+  	//console.log(this);
     this.parentNode.parentNode.appendChild(this);
   });
 };
@@ -107,7 +152,7 @@ d3.csv("../data/country_data.csv", function(error, data) {
       .attr("d", function(d) { return area(d.values); })
       .style("fill", function(d) { return color(d.name); });
 
-   segment.append("text")
+   var stat_labels=segment.append("text")
       .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
       .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.y0 + d.value.y / 2) + ")"; })
       .attr("x", 2)
@@ -115,9 +160,9 @@ d3.csv("../data/country_data.csv", function(error, data) {
       .attr("class","top")
       .text(function(d) { return d.name; });
       
-   segment.append("text")
+   var dyn_labels = segment.append("text")
       .datum(function(d) {  return {name: d.name, values: d.values}; } )
-      .attr("transform", function(d) { console.log(d.values); return "translate(" + x(d.values[10].date) + "," + y(d.values[10].y0 + d.values[10].y / 2) + ")"; })
+      .attr("transform", function(d) { return "translate(" + x(d.values[10].date) + "," + y(d.values[10].y0 + d.values[10].y / 2) + ")"; })
       .attr("x", 2)
       .attr("dy", ".35em")
       .attr("class","focus")
@@ -136,6 +181,8 @@ d3.csv("../data/country_data.csv", function(error, data) {
 
    d3.selectAll(".top").moveToFront();
    d3.selectAll(".focus").moveToFront();
+   console.log(stat_labels[0]);
+   relax(stat_labels[0]);
    
    var bisectDate = d3.bisector(function(d){ return d.date; }).left;
    
@@ -156,13 +203,13 @@ d3.csv("../data/country_data.csv", function(error, data) {
                     	focusL.style("display",null);
                         d3.selectAll(".focus")
                         	.each(function(d,i){
-                        		console.log(this);
+                        		//console.log(this);
                         		d3.select(this)
                         			.style("display",null);
                         	});
                         d3.selectAll(".top")
                         	.each(function(d,i){
-                        		console.log(this);
+                        		//console.log(this);
                         		d3.select(this)
                         			.style("display","none");
                         	});
@@ -171,13 +218,13 @@ d3.csv("../data/country_data.csv", function(error, data) {
                         focusL.style("display","none");
                         d3.selectAll(".focus")
                         	.each(function(d,i){
-                        		console.log(this);
+                        		//console.log(this);
                         		d3.select(this)
                         			.style("display","none");
                         	});
                         d3.selectAll(".top")
                         	.each(function(d,i){
-                        		console.log(this);
+                        		//console.log(this);
                         		d3.select(this)
                         			.style("display",null);
                         	});
@@ -196,13 +243,15 @@ d3.csv("../data/country_data.csv", function(error, data) {
                     	.each(function(d,i){
                     		//console.log(d);
                     		d3.select(this).attr("transform", function(d) { return "translate(" + x(d.values[dind].date) + "," + y(d.values[dind].y0 + d.values[dind].y / 2) + ")"; })
-                    		.text(function(d) { return d.name+" "+d.values[dind].y+ "("+d.values[dind].y/5+"%)"; });
-							if (d.values[dind].y>0){
+                    			.text(function(d) { return d.name+" "+d.values[dind].y+ "("+d.values[dind].y/5+"%)"; });
+
+                    		if (d.values[dind].y>0){
                     			d3.select(this).style("display",null);
                     		}else{
                     			d3.select(this).style("display","none");
                     		}
                     	});
+                    	relax(dyn_labels[0]);
                     focusL.attr("transform","translate(" +x(d.date)+","+
                     0+")");
                     
