@@ -125,5 +125,28 @@ def main():
     print segment_df
     segment_df.to_csv("segment_data.csv")
 
+    country_data={}
+    acceptable_countries=["United Kingdom" , "United States" , "Germany" , "Italy" , "China" , "Russia" , "Korea, South" , "France" , "Japan"]
+    for index,row in master_data.iterrows():
+        listid = row['ListID']
+        country=row['Country']
+        if country not in acceptable_countries:
+            country="Others"
+        if listid in country_data:
+            if country in country_data[listid]:
+                country_data[listid][country]+=1
+            else:
+                country_data[listid][country]=1
+        else:
+            country_data[listid]={"date":listid,country:1}
+    print country_data
+    country_list=[]
+    for key in country_data:
+        country_list.append(country_data[key])
+    country_df=pd.DataFrame(country_list)
+    country_df=country_df.sort(columns="date")
+    country_df=country_df.fillna(0)
+    print country_df
+    country_df.to_csv("country_data.csv")
         
 main()
