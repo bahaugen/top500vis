@@ -161,7 +161,7 @@ d3.csv("../data/arch_data.csv", function(error, data) {
       .attr("class","top")
       .text(function(d) { return d.name; });
       
-   segment.append("text")
+   var dyn_labels = segment.append("text")
       .datum(function(d) {  return {name: d.name, values: d.values}; } )
       .attr("transform", function(d) { return "translate(" + x(d.values[10].date) + "," + y(d.values[10].y0 + d.values[10].y / 2) + ")"; })
       .attr("x", 2)
@@ -252,6 +252,7 @@ d3.csv("../data/arch_data.csv", function(error, data) {
                     			d3.select(this).style("display","none");
                     		}
                     	});
+                    	relax(dyn_labels[0]);
                     focusL.attr("transform","translate(" +x(d.date)+","+
                     0+")");
                     
