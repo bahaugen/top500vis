@@ -118,6 +118,7 @@ def main():
     for key in segment_data:
         segment_list.append(segment_data[key])
     segment_df=pd.DataFrame(segment_list)
+    segment_df=segment_df.sort(columns="date")
     print segment_df
     segment_df.to_csv("segment_data.csv")
 
