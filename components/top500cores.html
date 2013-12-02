@@ -39,6 +39,47 @@
     </head>
     <body>
         <script type="text/javascript">
+        	var alpha = 1.5;
+			var spacing = 12;
+			function relax(lab_list) {
+				var again=true;
+				while (again){
+					again = false;
+					//while (again==true)
+					lab_list.forEach(function(a,i) {
+						lab_list.slice(i+1).forEach(function(b) {
+							var atrans = a.getAttribute('transform');
+							var aparts  = /translate\(\s*([^\s,)]+)[ ,]([^\s,)]+)/.exec(atrans);
+							var btrans = b.getAttribute('transform');
+							var bparts  = /translate\(\s*([^\s,)]+)[ ,]([^\s,)]+)/.exec(btrans);
+							aparts[1]=+aparts[1];
+							aparts[2]=+aparts[2];
+							bparts[1]=+bparts[1];
+							bparts[2]=+bparts[2];
+							var dy = aparts[2] - bparts[2];
+							dy = dy || 0
+							if (Math.abs(dy) < spacing) {
+								again = true;
+								var sign = dy > 0 ? 1 : -1;
+								var movea= aparts[2] + sign*alpha
+								if (movea<0){
+									movea=0;
+								}
+								var moveb= bparts[2] - sign*alpha
+								if (moveb<0){
+									moveb=0;
+								}
+								d3.select(a).attr("transform",function(d) { return "translate("+aparts[1]+","+movea+")";});
+								d3.select(b).attr("transform",function(d) { return "translate("+bparts[1]+","+moveb+")";});
+								a.y += sign*alpha;
+								b.y -= sign*alpha;
+							}
+						});
+					});
+					//again=false;
+				};
+			};
+
             
             //Width and height
             var margin = {top: 20, right: 115, bottom: 20, left: 100},
@@ -151,45 +192,56 @@
                     .style("text-anchor","end")
                     .text(function(d) {return d;});
 
-                var focusA = svg.append("g")
+
+                var focusAc = svg.append("g")
                     .attr("class","focus")
                     .style("display","none");
-                focusA.append("circle")
+                focusAc.append("circle")
                     .attr("r",4.5);
-                focusA.append("text")
-                    .attr("x",9)
-                    .attr("dy", ".35em");
-                
-                var focusS = svg.append("g")
+                var focusAt = svg.append("g")
                     .attr("class","focus")
                     .style("display","none");
-                focusS.append("circle")
-                    .attr("r",4.5);
-                focusS.append("text")
+                focusAt.append("text")
                     .attr("x",9)
-                    .attr("y",5)
-                    .attr("dy", ".35em");
-                
-                var focusN = svg.append("g")
-                    .attr("class","focus")
-                    .style("display","none");
-                focusN.append("circle")
-                    .attr("r",4.5);
-                focusN.append("text")
-                    .attr("x",9)
-                    .attr("y",5)
-                    .attr("dy", ".35em");
-                    
-                var focusB = svg.append("g")
-                    .attr("class","focus")
-                    .style("display","none");
-                focusB.append("circle")
-                    .attr("r",4.5);
-                focusB.append("text")
-                    .attr("x",9)
-                    .attr("y",-5)
                     .attr("dy", ".35em");
 
+                var focusBc = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusBc.append("circle")
+                    .attr("r",4.5);
+                var focusBt = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusBt.append("text")
+                    .attr("x",9)
+                    .attr("dy", ".35em");
+
+                var focusCc = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusCc.append("circle")
+                    .attr("r",4.5);
+                var focusCt = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusCt.append("text")
+                    .attr("x",9)
+                    .attr("dy", ".35em");
+
+                var focusDc = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusDc.append("circle")
+                    .attr("r",4.5);
+                var focusDt = svg.append("g")
+                    .attr("class","focus")
+                    .style("display","none");
+                focusDt.append("text")
+                    .attr("x",9)
+                    .attr("dy", ".35em");
+                
+                
                 var focusL = svg.append("g")
                     .attr("class","focus")
                     .style("display","none");
@@ -208,17 +260,25 @@
                     .attr("width",w)
                     .attr("height",h)
                     .on("mouseover",function() { 
-                        focusA.style("display", null);
-                        focusB.style("display", null);
-                        focusN.style("display", null);
-                        focusS.style("display", null);
+                        focusAc.style("display", null);
+                        focusAt.style("display", null);
+                        focusBc.style("display", null);
+                        focusBt.style("display", null);
+                        focusCc.style("display", null);
+                        focusCt.style("display", null);
+                        focusDc.style("display", null);
+                        focusDt.style("display", null);
                         focusL.style("display", null);
                     })
                     .on("mouseout",function() {
-                        focusA.style("display", "none");
-                        focusB.style("display", "none");
-                        focusS.style("display", "none");
-                        focusN.style("display", "none");
+                        focusAc.style("display", "none");
+                        focusAt.style("display", "none");
+                        focusBc.style("display", "none");
+                        focusBt.style("display", "none");
+                        focusCc.style("display", "none");
+                        focusCt.style("display", "none");
+                        focusDc.style("display", "none");
+                        focusDt.style("display", "none");
                         focusL.style("display", "none");
                     })
                     .on("mousemove", mousemove);
@@ -230,25 +290,35 @@
                         d1 = data[i],
                         d = x0-d0.date > d1.date-x0 ? d1 : d0;
                         console.log(d);
-                    focusA.attr("transform","translate(" +xScale(d.date)+","+
+                    
+                    focusAc.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.min)+")");
-                    focusA.select("text").text(d.min+"Cores");
+					focusAt.attr("transform","translate(" +xScale(d.date)+","+
+                    yScale(d.min)+")");
+                    focusAt.select("text").text(d.min+"Cores");
                     
-                    focusB.attr("transform","translate(" +xScale(d.date)+","+
+                    focusBc.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.max)+")");
-                    focusB.select("text").text(d.max+"Cores");
+                    focusBt.attr("transform","translate(" +xScale(d.date)+","+
+                    yScale(d.max)+")");
+                    focusBt.select("text").text(d.max+"Cores");
                     
-                    focusN.attr("transform","translate(" +xScale(d.date)+","+
+                    focusCc.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.mean)+")");
-                    focusN.select("text").text(d.mean+"Cores");
+                    focusCt.attr("transform","translate(" +xScale(d.date)+","+
+                    yScale(d.mean)+")");
+                    focusCt.select("text").text(d.mean+"Cores");
                     
-                    focusS.attr("transform","translate(" +xScale(d.date)+","+
+                    focusDc.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d['#1'])+")");
-                    focusS.select("text").text(d['#1']+"Cores");
+                    focusDt.attr("transform","translate(" +xScale(d.date)+","+
+                    yScale(d['#1'])+")");
+                    focusDt.select("text").text(d['#1']+"Cores");
                     
                     focusL.attr("transform","translate(" +xScale(d.date)+","+
                     0+")");
                     focusL.select("text").text(dateOutput(d.date));
+                    relax([focusAt[0][0],focusBt[0][0],focusCt[0][0],focusDt[0][0]]);
                 }
 
 
