@@ -9,22 +9,23 @@
 </head>
 <body>
 	<script>
-		function newSite(selectorName,frameName,titleName,captionName) {
+		function newSite(selectorName,frameName,titleName,captionName,citeName) {
     		var e = document.getElementById(selectorName);
     		var strUser = e.options[e.selectedIndex].value;
     		var sites = ['http://www.bhaugen.com/vis/components/top500line.html',
                  		'http://www.bhaugen.com/vis/components/top500cores.html']
     		var sites2 = [
-    												['http://www.bhaugen.com/vis/components/top500line.html','Performance','Performance Caption'],
-                 			['http://www.bhaugen.com/vis/components/top500cores.html','Core','Core Caption'],
-                 			['http://www.bhaugen.com/vis/components/top500segments.html','Segments','Segment Caption'],
-                 			['http://www.bhaugen.com/vis/components/top500country.html','Country','Country Caption'],
-                 			['http://www.bhaugen.com/vis/components/top500arch.html','Architecture','Architecture Caption']
+    												['http://www.bhaugen.com/vis/components/top500line.html','Performance','Performance Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"],
+                 			['http://www.bhaugen.com/vis/components/top500cores.html','Core','Core Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"],
+                 			['http://www.bhaugen.com/vis/components/top500segments.html','Segments','Segment Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"],
+                 			['http://www.bhaugen.com/vis/components/top500country.html','Country','Country Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"],
+                 			['http://www.bhaugen.com/vis/components/top500arch.html','Architecture','Architecture Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"]
                  		]
     
     		document.getElementById(frameName).src = sites2[strUser][0];
     		document.getElementById(titleName).innerHTML=sites2[strUser][1]
     		document.getElementById(captionName).innerHTML=sites2[strUser][2]
+    		document.getElementById(citeName).innerHTML=sites2[strUser][3]
 		}
 	</script>
 	<h1>Visualizing Trends in Supercomputing</h1>
@@ -32,7 +33,7 @@
 	<table>
 		<tr>
 			<td>
-				<select id="selector1" onchange="newSite('selector1','myIframe1','title1','caption1');">
+				<select id="selector1" onchange="newSite('selector1','myIframe1','title1','caption1','cite1');">
   					<option value="0"  selected>Performance</option>
   					<option value="1">Cores</option>
   					<option value="2">Segments</option>
@@ -46,11 +47,12 @@
 			<td>
 				<h3 id="title1">Performance</h3>
 				<p id="caption1">Performance Caption</p>
+				<p id="cite1">Source: <a href='http://www.top500.org'>Top 500</a></p>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<select id="selector2" onchange="newSite('selector2','myIframe2','title2','caption2');">
+				<select id="selector2" onchange="newSite('selector2','myIframe2','title2','caption2','cite2');">
   					<option value="0">Performance</option>
   					<option value="1" selected>Cores</option>
   					<option value="2">Segments</option>
@@ -64,6 +66,7 @@
 			<td>
 				<h3 id="title2">Cores</h3>
 				<p id="caption2">Core Caption</p>
+				<p id="cite2">Source: <a href='http://www.top500.org'>Top 500</a></p>
 			</td>
 		</tr>
 	</table>
