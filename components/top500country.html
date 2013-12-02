@@ -197,6 +197,11 @@ d3.csv("../data/country_data.csv", function(error, data) {
                     		//console.log(d);
                     		d3.select(this).attr("transform", function(d) { return "translate(" + x(d.values[dind].date) + "," + y(d.values[dind].y0 + d.values[dind].y / 2) + ")"; })
                     		.text(function(d) { return d.name+" "+d.values[dind].y+ "("+d.values[dind].y/5+"%)"; });
+							if (d.values[dind].y>0){
+                    			d3.select(this).style("display",null);
+                    		}else{
+                    			d3.select(this).style("display","none");
+                    		}
                     	});
                     focusL.attr("transform","translate(" +x(d.date)+","+
                     0+")");

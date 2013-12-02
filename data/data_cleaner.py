@@ -148,5 +148,26 @@ def main():
     country_df=country_df.fillna(0)
     print country_df
     country_df.to_csv("country_data.csv")
+    
+    arch_data={}
+    for index,row in master_data.iterrows():
+        listid = row['ListID']
+        arch=row['Architecture']
+        if listid in arch_data:
+            if arch in arch_data[listid]:
+                arch_data[listid][arch]+=1
+            else:
+                arch_data[listid][arch]=1
+        else:
+            arch_data[listid]={"date":listid,arch:1}
+    print arch_data
+    arch_list=[]
+    for key in arch_data:
+        arch_list.append(arch_data[key])
+    arch_df=pd.DataFrame(arch_list)
+    arch_df=arch_df.sort(columns="date")
+    arch_df=arch_df.fillna(0)
+    print arch_df
+    arch_df.to_csv("arch_data.csv")
         
 main()
