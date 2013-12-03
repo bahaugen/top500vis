@@ -45,6 +45,12 @@
                  		'CPU Frequency',
                  		'This is a plot of the clock frequency various processor over time.  The data for this plot was taken from CPUDB rather than the Top 500 data set.  The clock frequency is growing nearly exponentially until approximately 2004.  Around 2004 manufacturers began making multicore chips while the clock frequency of the processors stabilized.  The color points are colored based on the manufacturer of the chip.',
                  		"Data Source: <a href='http://cpudb.stanford.edu/'>CPUDB (Stanford)</a>"
+                 	],
+                 	[
+                 		'./components/top500os.html',
+                 		'Operating Systems',
+                 		'This plot shows how operating systems have developed over time in the HPC community.  The "Others" category is a collection of other operating systems that have a relatively small market share.  The real message in this plot is that Linux has taken of the supercomputing community.',
+                 		"Data Source: <a href='http://www.top500.org'>Top 500</a>"
                  	]
                  ];
 		function newSite(selectorName,frameName,titleName,captionName,citeName) {
@@ -69,6 +75,7 @@
   					<option value="3">Country</option>
   					<option value="4">Architecture</option>
   					<option value="5">CPU Frequency</option>
+  					<option value="6">Operating System</option>
 				</select>
 			</td>
 			<td>
@@ -89,6 +96,7 @@
   					<option value="3">Country</option>
   					<option value="4">Architecture</option>
   					<option value="5">CPU Frequency</option>
+  					<option value="6">Operating System</option>
 				</select>
 			</td>
 			<td>

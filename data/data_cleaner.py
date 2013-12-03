@@ -169,5 +169,29 @@ def main():
     arch_df=arch_df.fillna(0)
     print arch_df
     arch_df.to_csv("arch_data.csv")
+    
+    osys_data={}
+    acceptable_osyses=["Linux" , "Solaris" , "AIX" , "IRIX" , "UNICOS" , "HP Unix (HP-UX)" , "OSF/1" ]
+    for index,row in master_data.iterrows():
+        listid = row['ListID']
+        osys=row['Operating System']
+        if osys not in acceptable_osyses:
+            osys="Others"
+        if listid in osys_data:
+            if osys in osys_data[listid]:
+                osys_data[listid][osys]+=1
+            else:
+                osys_data[listid][osys]=1
+        else:
+            osys_data[listid]={"date":listid,osys:1}
+    print osys_data
+    osys_list=[]
+    for key in osys_data:
+        osys_list.append(osys_data[key])
+    osys_df=pd.DataFrame(osys_list)
+    osys_df=osys_df.sort(columns="date")
+    osys_df=osys_df.fillna(0)
+    print osys_df
+    osys_df.to_csv("os_data.csv")
         
 main()
