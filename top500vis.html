@@ -39,6 +39,12 @@
                  		'System Architecture',
                  		'The way supercomputers are built has also changed over the last 20 years.  In the early years the list was dominated by SIMD (Single Instruction Multiple Data), SMP (Symmetric Multiprocessor), and MPP (Massively Parallel Processor) supercomputers.  The last 20 years of supercomputing have marked the rise and fall of constellation supercomputers as well as the dominance of cluster supercomputers today.',
                  		"Data Source: <a href='http://www.top500.org'>Top 500</a>"
+                 	],
+                 	[
+                 		'./components/top500cpu_freq.html',
+                 		'CPU Frequency',
+                 		'This is a plot of the clock frequency various processor over time.  The data for this plot was taken from CPUDB rather than the Top 500 data set.  The clock frequency is growing nearly exponentially until approximately 2004.  Around 2004 manufacturers began making multicore chips while the clock frequency of the processors stabilized.  The color points are colored based on the manufacturer of the chip.',
+                 		"Data Source: <a href='http://cpudb.stanford.edu/'>CPUDB (Stanford)</a>"
                  	]
                  ];
 		function newSite(selectorName,frameName,titleName,captionName,citeName) {
@@ -62,6 +68,7 @@
   					<option value="2">Segments</option>
   					<option value="3">Country</option>
   					<option value="4">Architecture</option>
+  					<option value="5">CPU Frequency</option>
 				</select>
 			</td>
 			<td>
@@ -81,6 +88,7 @@
   					<option value="2">Segments</option>
   					<option value="3">Country</option>
   					<option value="4">Architecture</option>
+  					<option value="5">CPU Frequency</option>
 				</select>
 			</td>
 			<td>
