@@ -9,23 +9,46 @@
 </head>
 <body>
 	<script>
+		var sites=[
+    				[
+    					'./components/top500line.html',
+    					'Performance Over Time',
+    					'The performance plot shows that the speed of supercomputers has been increasing exponentially for the last 20 years.  The plot shows the performance of the #1 system on the Top 500 list at each point in time as well as the performance of the #500 machine and the sum of the performance of all machines.  The performance is measured using the Linpack benchmark.  This plot leaves many people wondering how long the exponential growth in performance will continue.',
+    					"Data Source: <a href='http://www.top500.org'>Top 500</a>"
+    				],
+                 	[
+                 		'./components/top500cores.html',
+                 		'Number of Cores Over Time',
+                 		'As the performance of supercomputers has grown over time, so have the number of cores present in each system.  This growth in the number of cores can make parallel programming a real challenge.  It is interesting to see the rather flat section of the graph from 1997 to 2004.  Around 2004 the number of cores begins to dramatically increase with each releas of the list.  This corresponds directly with the point in time where manufactures stabilized the clock frequency of the processor but began manufacturing multicore chips.',
+                 		"Data Source: <a href='http://www.top500.org'>Top 500</a>"
+                 	],
+                 	[
+                 		'./components/top500segments.html',
+                 		'Segments of the Economy',
+                 		'This plot shows the segments of the economy that are using supercomputers.(and have submitted Linpack results) It is often assumed that universities and government run research facilities have the vast majority of supercomputers.  Over the last 20 years, however, industry machines have become a large portion of the list.',
+                 		"Data Source: <a href='http://www.top500.org'>Top 500</a>"
+                 	],
+                 	[
+                 		'./components/top500country.html',
+                 		'Countries Represented',
+                 		'There are a number of countries that have supercomputers but the U.S. still has the largest number of machines in the Top 500 list.  One of the most interesting parts of this plot is the growth in the number of Chinese machines on the list.  It is even more interesting if you take some time to examine the lists and notice that many of the Chinese machines are quite highly ranked including the #1 machine as of November 2013.',
+                 		"Data Source: <a href='http://www.top500.org'>Top 500</a>"
+                 	],
+                 	[
+                 		'./components/top500arch.html',
+                 		'System Architecture',
+                 		'The way supercomputers are built has also changed over the last 20 years.  In the early years the list was dominated by SIMD (Single Instruction Multiple Data), SMP (Symmetric Multiprocessor), and MPP (Massively Parallel Processor) supercomputers.  The last 20 years of supercomputing have marked the rise and fall of constellation supercomputers as well as the dominance of cluster supercomputers today.',
+                 		"Data Source: <a href='http://www.top500.org'>Top 500</a>"
+                 	]
+                 ];
 		function newSite(selectorName,frameName,titleName,captionName,citeName) {
     		var e = document.getElementById(selectorName);
     		var strUser = e.options[e.selectedIndex].value;
-    		var sites = ['http://www.bhaugen.com/vis/components/top500line.html',
-                 		'http://www.bhaugen.com/vis/components/top500cores.html']
-    		var sites2 = [
-    												['http://www.bhaugen.com/vis/components/top500line.html','Performance','Performance Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"],
-                 			['http://www.bhaugen.com/vis/components/top500cores.html','Core','Core Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"],
-                 			['http://www.bhaugen.com/vis/components/top500segments.html','Segments','Segment Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"],
-                 			['http://www.bhaugen.com/vis/components/top500country.html','Country','Country Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"],
-                 			['http://www.bhaugen.com/vis/components/top500arch.html','Architecture','Architecture Caption',"Source: <a href='http://www.top500.org'>Top 500</a>"]
-                 		]
     
-    		document.getElementById(frameName).src = sites2[strUser][0];
-    		document.getElementById(titleName).innerHTML=sites2[strUser][1]
-    		document.getElementById(captionName).innerHTML=sites2[strUser][2]
-    		document.getElementById(citeName).innerHTML=sites2[strUser][3]
+    		document.getElementById(frameName).src = sites[strUser][0];
+    		document.getElementById(titleName).innerHTML=sites[strUser][1]
+    		document.getElementById(captionName).innerHTML=sites[strUser][2]
+    		document.getElementById(citeName).innerHTML=sites[strUser][3]
 		}
 	</script>
 	<h1>Visualizing Trends in Supercomputing</h1>
@@ -42,11 +65,11 @@
 				</select>
 			</td>
 			<td>
-				<iframe id="myIframe1" src="http://www.bhaugen.com/vis/components/top500line.html" scrolling="no" frameBorder="0"></iframe>
+				<iframe id="myIframe1" src="./components/top500line.html" scrolling="no" frameBorder="0"></iframe>
 			</td>
 			<td>
-				<h3 id="title1">Performance</h3>
-				<p id="caption1">Performance Caption</p>
+				<h3 id="title1">Performance Over Time</h3>
+				<p id="caption1">The performance plot shows that the speed of supercomputers has been increasing exponentially for the last 20 years.  The plot shows the performance of the #1 system on the Top 500 list at each point in time as well as the performance of the #500 machine and the sum of the performance of all machines.  The performance is measured using the Linpack benchmark.  This plot leaves many people wondering how long the exponential growth in performance will continue.</p>
 				<p id="cite1">Source: <a href='http://www.top500.org'>Top 500</a></p>
 			</td>
 		</tr>
@@ -61,11 +84,11 @@
 				</select>
 			</td>
 			<td>
-				<iframe id="myIframe2" src="http://www.bhaugen.com/vis/components/top500cores.html" scrolling="no" frameBorder="0"></iframe>
+				<iframe id="myIframe2" src="./components/top500cores.html" scrolling="no" frameBorder="0"></iframe>
 			</td>
 			<td>
-				<h3 id="title2">Cores</h3>
-				<p id="caption2">Core Caption</p>
+				<h3 id="title2">Number of Cores Over Time</h3>
+				<p id="caption2">As the performance of supercomputers has grown over time, so have the number of cores present in each system.  This growth in the number of cores can make parallel programming a real challenge.  It is interesting to see the rather flat section of the graph from 1997 to 2004.  Around 2004 the number of cores begins to dramatically increase with each releas of the list.  This corresponds directly with the point in time where manufactures stabilized the clock frequency of the processor but began manufacturing multicore chips.</p>
 				<p id="cite2">Source: <a href='http://www.top500.org'>Top 500</a></p>
 			</td>
 		</tr>
