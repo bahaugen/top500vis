@@ -82,7 +82,7 @@
 
             
             //Width and height
-            var margin = {top: 20, right: 115, bottom: 20, left: 100},
+            var margin = {top: 20, right: 130, bottom: 20, left: 40},
                 w=960-margin.left-margin.right,
                 h=500-margin.top-margin.bottom;
 
@@ -295,25 +295,25 @@
                     yScale(d.min)+")");
 					focusAt.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.min)+")");
-                    focusAt.select("text").text(d.min+"Cores");
+                    focusAt.select("text").text(d.min+" Cores");
                     
                     focusBc.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.max)+")");
                     focusBt.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.max)+")");
-                    focusBt.select("text").text(d.max+"Cores");
+                    focusBt.select("text").text(d.max+" Cores");
                     
                     focusCc.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.mean)+")");
                     focusCt.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.mean)+")");
-                    focusCt.select("text").text(d.mean+"Cores");
+                    focusCt.select("text").text(d.mean+" Cores");
                     
                     focusDc.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d['#1'])+")");
                     focusDt.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d['#1'])+")");
-                    focusDt.select("text").text(d['#1']+"Cores");
+                    focusDt.select("text").text(d['#1']+" Cores");
                     
                     focusL.attr("transform","translate(" +xScale(d.date)+","+
                     0+")");

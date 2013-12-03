@@ -41,7 +41,7 @@
         <script type="text/javascript">
             
             //Width and height
-            var margin = {top: 20, right: 115, bottom: 20, left: 100},
+            var margin = {top: 20, right: 130, bottom: 20, left: 40},
                 w=960-margin.left-margin.right,
                 h=500-margin.top-margin.bottom;
 
@@ -218,15 +218,15 @@
                         console.log(d);
                     focusA.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.top)+")");
-                    focusA.select("text").text(d.top+"GFlops");
+                    focusA.select("text").text(d.top+" GFlops");
                     
                     focusN.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.bottom)+")");
-                    focusN.select("text").text(d.bottom+"GFlops");
+                    focusN.select("text").text(d.bottom+" GFlops");
                     
                     focusS.attr("transform","translate(" +xScale(d.date)+","+
                     yScale(d.total)+")");
-                    focusS.select("text").text(d.total+"GFlops");
+                    focusS.select("text").text(d.total+" GFlops");
                     
                     focusL.attr("transform","translate(" +xScale(d.date)+","+
                     0+")");
