@@ -14,7 +14,7 @@ body {
 }
 
 .segment text {
-  text-anchor: end;
+  text-anchor: beginning;
 }
 
 .overlay {
@@ -26,6 +26,9 @@ body {
                 stroke: black;
                 stroke-width: 1;
             }
+.segment text{
+	text-anchor: beginning;
+}
 
 </style>
 <body>
@@ -153,13 +156,21 @@ d3.csv("../data/arch_data.csv", function(error, data) {
       .attr("d", function(d) { return area(d.values); })
       .style("fill", function(d) { return color(d.name); });
 
-   var stat_labels=segment.append("text")
-      .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
-      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.y0 + d.value.y / 2) + ")"; })
-      .attr("x", 2)
-      .attr("dy", ".35em")
-      .attr("class","top")
-      .text(function(d) { return d.name; });
+   var stat_labels=segment.append("g")
+   			.datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+   			.attr("transform", function(d) { console.log(x(d.value.date),y(d.value.y0 + d.value.y /2)); return "translate(" + x(d.value.date) + "," + y(d.value.y0 + d.value.y / 2) + ")"; })
+   			.attr("class","stat_label");
+   	stat_labels.append("text")
+      	.attr("x", 14)
+      	.attr("dy", ".35em")
+      	.attr("class","top")
+      	.text(function(d) { return d.name; });
+    stat_labels.append("rect")
+    	.attr("x",2)
+    	.attr("width","10")
+    	.attr("height","10")
+    	.attr("y","-5")
+    	.attr("fill",function(d) {return color(d.name);});
       
    var dyn_labels = segment.append("text")
       .datum(function(d) {  return {name: d.name, values: d.values}; } )
@@ -180,7 +191,7 @@ d3.csv("../data/arch_data.csv", function(error, data) {
       .attr("class", "y axis")
       .call(yAxis);
 
-   d3.selectAll(".top").moveToFront();
+   //d3.selectAll(".top").moveToFront();
    d3.selectAll(".focus").moveToFront();
    console.log(stat_labels[0]);
    relax(stat_labels[0]);
@@ -208,7 +219,7 @@ d3.csv("../data/arch_data.csv", function(error, data) {
                         		d3.select(this)
                         			.style("display",null);
                         	});
-                        d3.selectAll(".top")
+                        d3.selectAll(".stat_label")
                         	.each(function(d,i){
                         		//console.log(this);
                         		d3.select(this)
@@ -223,7 +234,7 @@ d3.csv("../data/arch_data.csv", function(error, data) {
                         		d3.select(this)
                         			.style("display","none");
                         	});
-                        d3.selectAll(".top")
+                        d3.selectAll(".stat_label")
                         	.each(function(d,i){
                         		//console.log(this);
                         		d3.select(this)
