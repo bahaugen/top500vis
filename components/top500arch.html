@@ -62,14 +62,19 @@ body {
           				var sign = dy > 0 ? 1 : -1;
           				//console.log(aparts[1],aparts[2],aparts[2]+sign*alpha,bparts[1],bparts[2],bparts[2]-sign*alpha,dy);
           				var movea= aparts[2] + sign*alpha
-          				if (movea<0){
-          					movea=0;
+          				if (movea<5){
+          					movea=5;
+          				}
+          				if (movea>height-5){
+          					movea=height-5;
           				}
           				var moveb= bparts[2] - sign*alpha
-          				if (moveb<0){
-          					moveb=0;
+          				if (moveb<5){
+          					moveb=5;
           				}
-          				//console.log(movea,moveb);
+          				if (movea>height-5){
+          					movea=height-5;
+          				}
           				d3.select(a).attr("transform",function(d) { return "translate("+aparts[1]+","+movea+")";});
           				d3.select(b).attr("transform",function(d) { return "translate("+bparts[1]+","+moveb+")";});
           				a.y += sign*alpha;
