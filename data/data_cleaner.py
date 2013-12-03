@@ -193,5 +193,57 @@ def main():
     osys_df=osys_df.fillna(0)
     print osys_df
     osys_df.to_csv("os_data.csv")
-        
+    
+    
+    acc_data={}
+    for index,row in master_data.iterrows():
+        acc=classify_acc(row['Accelerator/Co-Processor'])
+        if acc in acc_data:
+            acc_data[acc]+=1
+        else:
+            acc_data[acc]=1
+    for key in acc_data:
+        print key,acc_data[key]
+    
+    acc_data={}
+    for index,row in master_data.iterrows():
+        listid = row['ListID']
+        acc=classify_acc(row['Accelerator/Co-Processor'])
+        if listid in acc_data:
+            if acc in acc_data[listid]:
+                acc_data[listid][acc]+=1
+            else:
+                acc_data[listid][acc]=1
+        else:
+            acc_data[listid]={"date":listid,acc:1}
+    print acc_data
+    acc_list=[]
+    for key in acc_data:
+        acc_list.append(acc_data[key])
+    acc_df=pd.DataFrame(acc_list)
+    acc_df=acc_df.sort(columns="date")
+    acc_df=acc_df.fillna(0)
+    acc_df=acc_df[["date","None","Xeon Phi, NVIDIA","NVIDIA","IBM Cell","Intel Xeon Phi","AMD"]]
+    print acc_df
+    acc_df.to_csv("acc_data.csv")
+
+def classify_acc(acc_in):
+    nvidia=['NVIDIA K20x','NVIDIA 2090','NVIDIA 2050','NVIDIA 2075','NVIDIA 2070','Nvidia K20m','NVIDIA K20']
+    phi=['Intel Xeon Phi SE10P','Intel Xeon Phi 31S1P','Intel Xeon Phi SE10X','Intel Xeon Phi 3120p','Intel Xeon Phi','Intel MIC','Intel Xeon Phi 7120P','Intel Xeon Phi 7110','Intel Xeon Phi 5110P']
+    cell=['IBM PowerXCell 8i']
+    amd=['ATI GPU','AMD FirePro S10000','AMD Radeon HD 7970']
+    phiNnvidia=['K20M/Xeon Phi 5110P','NVIDIA K20/K20x, Xeon Phi 5110P']
+    acc_out="None"
+    if acc_in in nvidia:
+        acc_out ="NVIDIA"
+    if acc_in in phi:
+        acc_out ="Intel Xeon Phi"
+    if acc_in in cell:
+        acc_out ="IBM Cell"
+    if acc_in in amd:
+        acc_out ="AMD"
+    if acc_in in phiNnvidia:
+        acc_out ="Xeon Phi, NVIDIA"
+    return acc_out
+
 main()

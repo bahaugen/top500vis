@@ -51,6 +51,12 @@
                  		'Operating Systems',
                  		'This plot shows how operating systems have developed over time in the HPC community.  The "Others" category is a collection of other operating systems that have a relatively small market share.  The real message in this plot is that Linux has taken of the supercomputing community.',
                  		"Data Source: <a href='http://www.top500.org'>Top 500</a>"
+                 	],
+                 	[
+                 		'./components/top500acc.html',
+                 		'Accelerators and Co-Processors',
+                 		'In recent years supercomputers have started to use accelerators or co-processors in order to improve performance.  There is a lot of hype surrounding GPU computing and accelerators.  For this reason many people believe that the Top 500 list an enormous number of machines that employ accelerators.  This graphs shows that this is simply not true.  In fact, only a small number of systems use accelerators.',
+                 		"Data Source: <a href='http://www.top500.org'>Top 500</a>"
                  	]
                  ];
 		function newSite(selectorName,frameName,titleName,captionName,citeName) {
@@ -76,6 +82,7 @@
   					<option value="4">Architecture</option>
   					<option value="5">CPU Frequency</option>
   					<option value="6">Operating System</option>
+  					<option value="7">Accelerator</option>
 				</select>
 			</td>
 			<td>
@@ -84,7 +91,7 @@
 			<td>
 				<h3 id="title1">Performance Over Time</h3>
 				<p id="caption1">The performance plot shows that the speed of supercomputers has been increasing exponentially for the last 20 years.  The plot shows the performance of the #1 system on the Top 500 list at each point in time as well as the performance of the #500 machine and the sum of the performance of all machines.  The performance is measured using the Linpack benchmark.  This plot leaves many people wondering how long the exponential growth in performance will continue.</p>
-				<p id="cite1">Source: <a href='http://www.top500.org'>Top 500</a></p>
+				<p id="cite1">Data Source: <a href='http://www.top500.org'>Top 500</a></p>
 			</td>
 		</tr>
 		<tr>
@@ -97,6 +104,7 @@
   					<option value="4">Architecture</option>
   					<option value="5">CPU Frequency</option>
   					<option value="6">Operating System</option>
+  					<option value="7">Accelerator</option>
 				</select>
 			</td>
 			<td>
@@ -105,7 +113,7 @@
 			<td>
 				<h3 id="title2">Number of Cores Over Time</h3>
 				<p id="caption2">As the performance of supercomputers has grown over time, so have the number of cores present in each system.  This growth in the number of cores can make parallel programming a real challenge.  It is interesting to see the rather flat section of the graph from 1997 to 2004.  Around 2004 the number of cores begins to dramatically increase with each releas of the list.  This corresponds directly with the point in time where manufactures stabilized the clock frequency of the processor but began manufacturing multicore chips.</p>
-				<p id="cite2">Source: <a href='http://www.top500.org'>Top 500</a></p>
+				<p id="cite2">Data Source: <a href='http://www.top500.org'>Top 500</a></p>
 			</td>
 		</tr>
 	</table>
