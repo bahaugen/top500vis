@@ -1,9 +1,14 @@
 <html>
 <head>
 	<style type="text/css">
+	@font-face {
+		font-family: "Proxima Nova";
+		src: url('components/sim/Proxima Nova.ttf');
+	}
 	html, body {
     	width: 100%;
     	height: 100%;
+    	font-family: 'Proxima Nova';
 	}
 	iframe {
 		width: 980px;
@@ -30,6 +35,7 @@
 			<td>
 				<select id="selector1" onchange="newSite('selector1','myIframe1','title1','caption1','cite1');">
   					<option value="0"  selected>Performance</option>
+  					<option value="8">Simulation</option>
   					<option value="1">Cores</option>
   					<option value="2">Segments</option>
   					<option value="3">Country</option>
@@ -37,6 +43,7 @@
   					<option value="5">CPU Frequency</option>
   					<option value="6">Operating System</option>
   					<option value="7">Accelerator</option>
+  					
 				</select>
 			</td>
 			<td>
@@ -52,6 +59,7 @@
 			<td>
 				<select id="selector2" onchange="newSite('selector2','myIframe2','title2','caption2','cite2');">
   					<option value="0">Performance</option>
+  					<option value="8">Simulation</option>
   					<option value="1" selected>Cores</option>
   					<option value="2">Segments</option>
   					<option value="3">Country</option>
@@ -59,6 +67,7 @@
   					<option value="5">CPU Frequency</option>
   					<option value="6">Operating System</option>
   					<option value="7">Accelerator</option>
+  					
 				</select>
 			</td>
 			<td>
@@ -121,6 +130,12 @@
                  		'Accelerators and Co-Processors',
                  		'In recent years supercomputers have started to use accelerators or co-processors in order to improve performance.  There is a lot of hype surrounding GPU computing and accelerators.  For this reason many people believe that the Top 500 list has a large number of machines that employ accelerators.  This graphs shows that this is simply not true.  In fact, only a small number of systems use accelerators.',
                  		"Data Source: <a href='http://www.top500.org'>Top 500</a>"
+                 	],
+                 	[
+                 		'./components/top500sim.html',
+                 		'Molecular Dynamics Simulation',
+                 		'This is a physically accurate Lennard-Jones liquid simulation using the velocity-verlet timestep integration algorithm. It is a to-scale representation of a real simulation that is performed on supercomputing systems. This molecular dynamics simulation illustrates the evolution of supercomputing performance in floating point operations per second (FLOPS) over the last two decades.  This clearly demonstrates the power of exponential growth.<br/><br/>The brightness of each atom corresponds to the atom\'s speed.<br/><br/>(Click and drag the simulation box to rotate.)',
+                 		""
                  	]
                  ];
         function preselect(){
